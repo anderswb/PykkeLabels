@@ -103,7 +103,7 @@ class Pykkelabels:
             url = Pykkelabels.API_ENDPOINT + '/' + method
             f = urllib.request.urlopen(url, params.encode('utf-8'))
         else:
-            url = Pykkelabels.API_ENDPOINT + '/' + method + '?%s' % params
+            url = Pykkelabels.API_ENDPOINT + '/' + method + '?' + params
             f = urllib.request.urlopen(url)
 
 #        curl_setopt(ch, CURLOPT_RETURNTRANSFER, true);
