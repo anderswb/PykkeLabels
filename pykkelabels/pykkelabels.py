@@ -36,6 +36,7 @@ class Pykkelabels:
         self._api_user = api_user
         self._api_key = api_key
         self.login()
+        urllib.request.urlopen(Pykkelabels.API_ENDPOINT)
 
     def login(self):
         # Create an OpenerDirector with support for Basic HTTP Authentication...
