@@ -105,21 +105,10 @@ class Pykkelabels:
         else:
             url = Pykkelabels.API_ENDPOINT + '/' + method + '?' + params
             f = urllib.request.urlopen(url)
-
-#        curl_setopt(ch, CURLOPT_RETURNTRANSFER, true);
-
-#        http_code = curl_getinfo( ch, CURLINFO_HTTP_CODE);
-
+            
         output = f.read().decode('utf-8')
         outputparsed = json.loads(output)
-
-#        if http_code != 200:
-#            if(is_array(output['message'])):
-#                    print_r(output['message']);
-#                    die();
-#            }else{
-#                    die(output['message']);
-#            }
+        
         return outputparsed
 
 
