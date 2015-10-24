@@ -9,7 +9,7 @@ Put the Pykkelabels folder into your current repo and import it using:
 
 ## Usage
 
-The first thing required is to login
+The first thing required is to login:
 ```
 label = new Pykkelabels('api_user', 'api_key')
 ```
