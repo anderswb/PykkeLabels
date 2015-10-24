@@ -41,7 +41,7 @@ See the github guide to contributing [here](https://guides.github.com/activities
 
 ## History
 
-
+v0.1: First working release. Most of the functionality is still untested.
 
 ## Credits
 
