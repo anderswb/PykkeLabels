@@ -31,7 +31,7 @@ __license__ = "GPLv2"
 __version__ = "0.1.0"
 __maintainer__ = "Anders Brandt"
 __email__ = "anderswb at  gmail dot com"
-__status__ = "Testing"
+__status__ = "Development"
 
 #// Display the PDF for a specific label
 #base64 = label->pdf(31629);
