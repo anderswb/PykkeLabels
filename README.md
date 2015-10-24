@@ -1,6 +1,7 @@
 # Pykkelabels
 
-Interface to the pakkelabels.dk web service
+Python implementation of the Pakkelabels.dk php package for interacting with the Pakkelabels.dk web service.
+For documentation on usage and the methods, see the documentation [here](https://www.pakkelabels.dk/integration/api/).
 
 ## Installation
 
