@@ -67,11 +67,11 @@ class Pykkelabels:
         result = self._make_api_call('shipments/zpl', False, {'id': idno})
         return result['base64']
     
-    def shipments(self, params=dict()):
+    def shipments(self, params=None):
         result = self._make_api_call('shipments/shipments', False, params)
         return result
     
-    def imported_shipments(self, params=dict()):
+    def imported_shipments(self, params=None):
         result = self._make_api_call('shipments/imported_shipments', False, params)
         return result
 
@@ -106,7 +106,12 @@ class Pykkelabels:
     def getToken(self):
         return self._token
 
-    def _make_api_call(self, method, doPost=False, params=dict()):
+    def _make_api_call(self, method, doPost=False, params=None):
+        if params is None:
+            params = dict()
+        elif not isinstance(params, dict):
+            raise TypeError('params should be of type dict or None, got type: {}'.format(type(params).__name__))
+
         params['token'] = self._token
         params = urllib.parse.urlencode(params)
         
@@ -132,4 +137,5 @@ if __name__ == '__main__':
         print(' ------------------')
         for key, value in droppoint.items():
             print(' ' + key + ': ' + value)
-    # print(pl.freight_rates())
+
+    pl.gls_droppoints(['2300'])
