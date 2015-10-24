@@ -124,7 +124,7 @@ class Pykkelabels:
 
 
 if __name__ == '__main__':
-    pl = Pykkelabels('871684fe-b098-4d04-a96a-527865f162da', '073e628f-c8b6-4911-87b5-63b6fa451fc6')
+    pl = Pykkelabels('api username', 'api password')
     print('Token: {}'.format(pl.getToken()))
     print('Balance: {}'.format(pl.balance()))
     print('GLS droppoints:')
