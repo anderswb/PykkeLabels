@@ -33,14 +33,13 @@ __maintainer__ = "Anders Brandt"
 __email__ = "anderswb at  gmail dot com"
 __status__ = "Development"
 
-#// Display the PDF for a specific label
-#base64 = label->pdf(31629);
-#pdf = base64_decode(base64);
-#header('Content-type: application/pdf');
-#header('Content-Disposition: inline; filename="label.pdf"');
-#echo pdf;
-#*/
-#
+# // Display the PDF for a specific label
+# base64 = label->pdf(31629);
+# pdf = base64_decode(base64);
+# header('Content-type: application/pdf');
+# header('Content-Disposition: inline; filename="label.pdf"');
+# echo pdf;
+# */
 
 
 class Pykkelabels:
@@ -60,19 +59,19 @@ class Pykkelabels:
         result = self._make_api_call('users/balance')
         return result['balance']
 
-    def pdf(self, id):
-        result = self._make_api_call('shipments/pdf', False, {'id': id})
+    def pdf(self, idno):
+        result = self._make_api_call('shipments/pdf', False, {'id': idno})
         return result['base64']
 
-    def zpl(self, id):
-        result = self._make_api_call('shipments/zpl', False, {'id': id})
+    def zpl(self, idno):
+        result = self._make_api_call('shipments/zpl', False, {'id': idno})
         return result['base64']
     
-    def shipments(self, params = dict()):
+    def shipments(self, params=dict()):
         result = self._make_api_call('shipments/shipments', False, params)
         return result
     
-    def imported_shipments(self, params = dict()):
+    def imported_shipments(self, params=dict()):
         result = self._make_api_call('shipments/imported_shipments', False, params)
         return result
 
@@ -100,14 +99,14 @@ class Pykkelabels:
         result = self._make_api_call('shipments/gls_droppoints', False, params)
         return result
 
-    def pdk_droppoints(params):
+    def pdk_droppoints(self, params):
         result = self._make_api_call('shipments/pdk_droppoints', False, params)
         return result
 
     def getToken(self):
         return self._token
 
-    def _make_api_call(self, method, doPost = False, params = dict()):
+    def _make_api_call(self, method, doPost=False, params=dict()):
         params['token'] = self._token
         params = urllib.parse.urlencode(params)
         
@@ -133,5 +132,4 @@ if __name__ == '__main__':
         print(' ------------------')
         for key, value in droppoint.items():
             print(' ' + key + ': ' + value)
-    #print(pl.freight_rates())
-    
+    # print(pl.freight_rates())
