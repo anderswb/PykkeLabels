@@ -6,6 +6,8 @@ from pykkelabels.pykkelabels import *
 import urllib.error
 from decimal import *
 
+import base64
+
 API_USER = '492ace80-8b40-4369-8ee7-ca4457984ffb'
 API_KEY = 'da04a9e9-1563-4aaf-b443-3012ca6c2772'
 
@@ -47,6 +49,57 @@ class goodinput(unittest.TestCase):
                        'address2': 'Pakkeshop: 95423', 'address': 'Reberbanegade 3', 'zipcode':'2300'}]
         points = pl.gls_droppoints({'zipcode': '2300'})
         self.assertEqual(points, exp_points)
+
+    def test_freight_rates(self):
+        pl = Pykkelabels(API_USER, API_KEY)
+        rates = pl.freight_rates()
+
+        # Test a couple of things, which should be in the returned dict
+        self.assertIsInstance(rates, dict)
+        self.assertIsInstance(rates['DK'], dict)
+        self.assertIsInstance(rates['GB'], dict)
+        self.assertIsInstance(rates['DE'], dict)
+        self.assertIsInstance(rates['DK']['gls'], dict)
+        self.assertIsInstance(rates['DK']['pdk'], dict)
+        self.assertEqual(rates['DK']['pdk']['name'], 'Post Danmark')
+
+    def test_payment_requests(self):
+        pl = Pykkelabels(API_USER, API_KEY)
+        requests = pl.payment_requests()
+        self.assertIsInstance(requests, list)
+        self.assertEqual(0, len(requests))
+
+    def test_create_shipment(self):
+        params = {'shipping_agent': 'pdk',
+                  'weight': '1000',
+                  'receiver_name': 'John Doe',
+                  'receiver_address1': 'Some Street 42',
+                  'receiver_zipcode': '5230',
+                  'receiver_city': 'Odense M',
+                  'receiver_country': 'DK',
+                  'receiver_email': 'test@test.dk',
+                  'receiver_mobile': '12345678',
+                  'sender_name': 'John Wayne',
+                  'sender_address1': 'The Batcave 1',
+                  'sender_zipcode': '5000',
+                  'sender_city': 'Odense C',
+                  'sender_country': 'DK',
+                  'shipping_product_id': '51',
+                  'services': '11,12',
+                  'test': 'true'}
+
+        pl = Pykkelabels(API_USER, API_KEY)
+        result = pl.create_shipment(params)
+        self.assertEqual(result['pkg_no'], '00000000000000000000')
+        self.assertEqual(result['order_id'], '0000')
+        self.assertEqual(result['shipment_id'], '0000')
+        pdfpayload = base64.b64decode(result['base64'])
+
+        with open("reference_label.pdf", "rb") as f:
+            referencepdf = f.read()
+
+        self.assertEqual(pdfpayload, referencepdf)
+        
 
 if __name__ == '__main__':
     unittest.main()
