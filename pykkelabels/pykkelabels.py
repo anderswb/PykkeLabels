@@ -29,6 +29,9 @@ import urllib.error
 import urllib.parse
 import json
 
+from decimal import *
+
+
 __author__ = "Anders Brandt"
 __license__ = "GPLv2"
 __version__ = "0.1.0"
@@ -52,7 +55,7 @@ class Pykkelabels:
 
     def balance(self):
         result = self._make_api_call('users/balance')
-        return result['balance']
+        return Decimal(result['balance'])
 
     def pdf(self, idno):
         result = self._make_api_call('shipments/pdf', False, {'id': idno})
@@ -109,14 +112,14 @@ class Pykkelabels:
 
         params['token'] = self._token
         params = urllib.parse.urlencode(params)
-        
+
         if doPost:
             url = Pykkelabels.API_ENDPOINT + '/' + method
             f = urllib.request.urlopen(url, params.encode('utf-8'))
         else:
             url = Pykkelabels.API_ENDPOINT + '/' + method + '?' + params
             f = urllib.request.urlopen(url)
-            
+
         output = f.read().decode('utf-8')
         outputparsed = json.loads(output)
         
