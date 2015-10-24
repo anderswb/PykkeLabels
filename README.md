@@ -10,17 +10,23 @@ Put the Pykkelabels folder into your current repo and import it using:
 ## Usage
 
 The first thing required is to login
-`label = new Pykkelabels('api_user', 'api_key')`
+```
+label = new Pykkelabels('api_user', 'api_key')
+```
 
 This will login and fetch the required token.
 The token is then automatically added to any subsequent calls.
 
 To see the generated token you can use:
-`print(label.getToken())`
+```
+print(label.getToken())
+```
 
 # Examples:
 Get all Post Danmark labels shipped to Denmark:
-`labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})`
+```
+labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
+```
 
 Get the PDF for a specific label:
 ```
