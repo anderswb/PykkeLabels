@@ -16,9 +16,12 @@ print(label.getToken())
 
 Examples:
 ----------------
-Get all Post Danmark labels shipped to Denmark
+Get all Post Danmark labels shipped to Denmark:
 labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
 
+Get the PDF for a specific label:
+base64 = label.pdf(31629)
+pdf = base64.decode('base64')
 """
 
 import urllib.request
@@ -32,14 +35,6 @@ __version__ = "0.1.0"
 __maintainer__ = "Anders Brandt"
 __email__ = "anderswb at  gmail dot com"
 __status__ = "Development"
-
-# // Display the PDF for a specific label
-# base64 = label->pdf(31629);
-# pdf = base64_decode(base64);
-# header('Content-type: application/pdf');
-# header('Content-Disposition: inline; filename="label.pdf"');
-# echo pdf;
-# */
 
 
 class Pykkelabels:
