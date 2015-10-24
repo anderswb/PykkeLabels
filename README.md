@@ -22,7 +22,7 @@ To see the generated token you can use:
 print(label.getToken())
 ```
 
-# Examples:
+### Examples:
 Get all Post Danmark labels shipped to Denmark:
 ```
 labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
