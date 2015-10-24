@@ -6,7 +6,7 @@ For documentation on usage and the methods, see the documentation [here](https:/
 ## Installation
 
 Put the Pykkelabels folder into your current repo and import it using:
-`from pykkelabels import Pykkelabels`
+`from pykkelabels.pykkelabels import Pykkelabels`
 
 ## Usage
 
