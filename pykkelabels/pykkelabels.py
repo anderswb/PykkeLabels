@@ -21,6 +21,18 @@ labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
 
 """
 
+import urllib.request
+import urllib.error
+import urllib.parse
+import json
+
+__author__ = "Anders Brandt"
+__license__ = "GPLv2"
+__version__ = "0.1.0"
+__maintainer__ = "Anders Brandt"
+__email__ = "anderswb at  gmail dot com"
+__status__ = "Testing"
+
 #// Display the PDF for a specific label
 #base64 = label->pdf(31629);
 #pdf = base64_decode(base64);
@@ -30,10 +42,6 @@ labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
 #*/
 #
 
-import urllib.request
-import urllib.error
-import urllib.parse
-import json
 
 class Pykkelabels:
     API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2'
