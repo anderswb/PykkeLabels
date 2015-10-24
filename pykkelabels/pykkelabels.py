@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """ Python implementation of the Pakkelabels.dk php package for interacting with the Pakkelabels.dk web service.
 For documentation on usage and the methods, see the documentation on https://www.pakkelabels.dk/integration/api/
