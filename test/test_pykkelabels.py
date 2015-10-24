@@ -99,7 +99,7 @@ class goodinput(unittest.TestCase):
             referencepdf = f.read()
 
         self.assertEqual(pdfpayload, referencepdf)
-        
+
 
 if __name__ == '__main__':
     unittest.main()

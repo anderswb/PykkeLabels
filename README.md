@@ -31,8 +31,9 @@ labels = label.shipments({'shipping_agent': 'pdk', 'receiver_country': 'DK'})
 
 Get the PDF for a specific label:
 ```
+import base64
 base64 = label.pdf(31629)
-pdf = base64.decode('base64')
+pdf = base64.b64decode(base64)
 ```
 
 ## Contributing
