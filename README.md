@@ -5,7 +5,12 @@ For documentation on usage and the methods, see the documentation [here](https:/
 
 ## Installation
 
-Put the Pykkelabels folder into your current repo and import it using:
+Easiest way is to install the package using pip:
+```
+pip install Pykkelabels
+```
+
+Alternatively, put the Pykkelabels folder into your current repo and import it using:
 ```
 from pykkelabels.pykkelabels import Pykkelabels
 ```
@@ -46,6 +51,7 @@ See the github guide to contributing [here](https://guides.github.com/activities
 
 v0.1: First working release. Most of the functionality is still untested.
 v0.1.1: Added unittests to the methods where it is possible
+v0.1.2: Prepared pypi release
 
 ## Credits
 
