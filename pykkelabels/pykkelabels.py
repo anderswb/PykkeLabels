@@ -125,16 +125,3 @@ class Pykkelabels:
         outputparsed = json.loads(output)
         
         return outputparsed
-
-
-if __name__ == '__main__':
-    pl = Pykkelabels('api username', 'api password')
-    print('Token: {}'.format(pl.getToken()))
-    print('Balance: {}'.format(pl.balance()))
-    print('GLS droppoints:')
-    for droppoint in pl.gls_droppoints({'zipcode': '2300'}):
-        print(' ------------------')
-        for key, value in droppoint.items():
-            print(' ' + key + ': ' + value)
-
-    pl.gls_droppoints(['2300'])
