@@ -49,9 +49,9 @@ See the github guide to contributing [here](https://guides.github.com/activities
 
 ## History
 
-v0.1: First working release. Most of the functionality is still untested.
-v0.1.1: Added unittests to the methods where it is possible
-v0.1.2: Prepared pypi release
+- v0.1: First working release. Most of the functionality is still untested.
+- v0.1.1: Added unittests to the methods where it is possible
+- v0.1.2: Prepared pypi release
 
 ## Credits
 
