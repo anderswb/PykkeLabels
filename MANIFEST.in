@@ -1,2 +1,3 @@
 include test/*.pdf
+include test/*.ini
 include README.md
