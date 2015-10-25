@@ -19,7 +19,6 @@ setup(
     url = "https://github.com/anderswb/PykkeLabels",
     packages=['pykkelabels', 'test'],
     long_description=read('README.md'),
-    package_data={'': ['README.md', 'test/reference_label.pdf']},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
