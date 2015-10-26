@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from pykkelabels.pykkelabels import *
+from pykkelabels import Pykkelabels
 
 import urllib.error
 from decimal import *
@@ -92,7 +92,7 @@ class GoodInput(unittest.TestCase):
         self.assertEqual(result['shipment_id'], '0000')
         pdfpayload = base64.b64decode(result['base64'])
 
-        with open("reference_label.pdf", "rb") as f:
+        with open('reference_label.pdf', 'rb') as f:
             referencepdf = f.read()
 
         self.assertEqual(pdfpayload, referencepdf)
