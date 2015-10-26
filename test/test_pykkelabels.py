@@ -92,10 +92,8 @@ class GoodInput(unittest.TestCase):
         self.assertEqual(result['shipment_id'], '0000')
         pdfpayload = base64.b64decode(result['base64'])
 
-        with open('reference_label.pdf', 'rb') as f:
-            referencepdf = f.read()
-
-        self.assertEqual(pdfpayload, referencepdf)
+        # test that the retrieved data seems pdf-ish
+        self.assertEqual(pdfpayload[0:7], b'%PDF-1.')
 
     def setUp(self):
         try:
