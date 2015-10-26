@@ -1,4 +1,5 @@
 from .pykkelabels import Pykkelabels
+from .exceptions import *
 
 __author__ = "Anders Brandt"
 __license__ = "MIT"
