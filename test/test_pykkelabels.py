@@ -7,6 +7,7 @@ import urllib.error
 from decimal import *
 import base64
 import configparser
+from os import path
 
 
 class GoodInput(unittest.TestCase):
@@ -98,7 +99,12 @@ class GoodInput(unittest.TestCase):
     def setUp(self):
         try:
             config = configparser.ConfigParser()
-            config.read('testsettings.ini')
+            if path.isfile('test/testsettings.ini'):
+                config.read('test/testsettings.ini')
+            elif path.isfile('testsettings.ini'):
+                config.read('testsettings.ini')
+            else:
+                raise Exception('Missing testsettings.ini file')
             self.api_user = config.get('login', 'api_user')
             self.api_key = config.get('login', 'api_key')
         except:
