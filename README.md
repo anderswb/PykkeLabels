@@ -59,4 +59,4 @@ Anders Winther Brandt
 
 ## License
 
-GPLv2
+MIT, see LICENSE file
