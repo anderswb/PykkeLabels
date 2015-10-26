@@ -33,14 +33,6 @@ import json
 from decimal import *
 
 
-__author__ = "Anders Brandt"
-__license__ = "GPLv2"
-__version__ = "0.1.2"
-__maintainer__ = "Anders Brandt"
-__email__ = "anderswb at  gmail dot com"
-__status__ = "Development"
-
-
 class Pykkelabels:
     API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2'
 

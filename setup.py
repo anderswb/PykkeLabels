@@ -1,20 +1,18 @@
 import os
 from setuptools import setup
+import pykkelabels
 
-# Utility function to read the README file.
-# Used for the long_description.  It's nice, because now 1) we have a top level
-# README file and 2) it's easier to type in the README file than to put a raw
-# string in below ...
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
     name = "Pykkelabels",
-    version = "0.1.2",
-    author = "Anders Brandt",
-    author_email = "anderswb at gmail dot com",
+    version = pykkelabels.__version__,
+    author = pykkelabels.__maintainer__,
+    author_email = pykkelabels.__email__,
     description = ("Provides access to the pakkelabels.dk web service."),
-    license = "GPLv2",
+    license = pykkelabels.__license__,
     keywords = "pakke labels pakkelabels pakkelabels.dk",
     url = "https://github.com/anderswb/PykkeLabels",
     packages=['pykkelabels', 'test'],
@@ -22,6 +20,6 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
-        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+        "License :: OSI Approved :: MIT License",
     ],
 )
