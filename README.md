@@ -46,7 +46,7 @@ pdf = base64.b64decode(base64)
 ```
 
 ### Exceptions:
-If there is problems with the connectivity to the server, or if the returned data is not parseble, a URLError is raised.
+If there is problems with the connectivity to the server, or if the returned data is not parsable, a URLError is raised.
 If the server returns an error a HTTPError exception is raised, with a message containing the error message from the server.
 
 ## Contributing
