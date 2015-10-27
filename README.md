@@ -52,6 +52,7 @@ See the github guide to contributing [here](https://guides.github.com/activities
 - v0.1: First working release. Most of the functionality is still untested.
 - v0.1.1: Added unittests to the methods where it is possible
 - v0.1.2: Prepared pypi release
+- v0.1.3: Added better error handling, and added custom exception. Added testing for bad inputs. Implemented better test of pdf generation.  
 
 ## Credits
 
