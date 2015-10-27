@@ -119,7 +119,7 @@ class Pykkelabels:
             try:
                 error_parsed = json.loads(error_message)
             except:
-                raise URLError('Parsed error message is not parseable, possible bad url')
+                raise URLError('Parsed error message is not parsable, possible bad url')
             if isinstance(error_parsed['message'], dict):
                 error_message = error_parsed['message']['base'][0]
             else:
