@@ -91,10 +91,16 @@ class GoodInput(unittest.TestCase):
         self.assertEqual(result['pkg_no'], '00000000000000000000')
         self.assertEqual(result['order_id'], '0000')
         self.assertEqual(result['shipment_id'], '0000')
-        pdfpayload = base64.b64decode(result['base64'])
 
-        # test that the retrieved data seems pdf-ish
-        self.assertEqual(pdfpayload[0:7], b'%PDF-1.')
+        # decode the data and cast it to bytearray to make  it mutable
+        pdf_payload = bytearray(base64.b64decode(result['base64']))
+        pdf_payload[969:969+32] = b"00000000000000000000000000000000"  # blank out the date-stamp
+
+        # get the reference label
+        with open('reference_label.pdf', 'rb') as f:
+            pdf_reference = f.read()
+
+        self.assertEqual(pdf_payload, pdf_reference)
 
     def setUp(self):
         try:
