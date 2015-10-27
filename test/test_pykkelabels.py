@@ -2,6 +2,7 @@
 
 import unittest
 from pykkelabels import Pykkelabels
+from pykkelabels.exceptions import *
 
 import urllib.error
 from decimal import *
@@ -9,6 +10,21 @@ import base64
 import configparser
 from os import path
 
+
+def read_config():
+    try:
+        config = configparser.ConfigParser()
+        if path.isfile('test/testsettings.ini'):
+            config.read('test/testsettings.ini')
+        elif path.isfile('testsettings.ini'):
+            config.read('testsettings.ini')
+        else:
+            raise Exception('Missing testsettings.ini file')
+        api_user = config.get('login', 'api_user')
+        api_key = config.get('login', 'api_key')
+        return api_user, api_key
+    except:
+        raise Exception('Unable to read the required settings from the ini file.')
 
 class GoodInput(unittest.TestCase):
 
@@ -92,7 +108,7 @@ class GoodInput(unittest.TestCase):
         self.assertEqual(result['order_id'], '0000')
         self.assertEqual(result['shipment_id'], '0000')
 
-        # decode the data and cast it to bytearray to make  it mutable
+        # decode the data and cast it to bytearray to make it mutable
         pdf_payload = bytearray(base64.b64decode(result['base64']))
         pdf_payload[969:969+32] = b"00000000000000000000000000000000"  # blank out the date-stamp
 
@@ -103,18 +119,59 @@ class GoodInput(unittest.TestCase):
         self.assertEqual(pdf_payload, pdf_reference)
 
     def setUp(self):
-        try:
-            config = configparser.ConfigParser()
-            if path.isfile('test/testsettings.ini'):
-                config.read('test/testsettings.ini')
-            elif path.isfile('testsettings.ini'):
-                config.read('testsettings.ini')
-            else:
-                raise Exception('Missing testsettings.ini file')
-            self.api_user = config.get('login', 'api_user')
-            self.api_key = config.get('login', 'api_key')
-        except:
-            raise Exception('Unable to read the required settings from the ini file.')
+        self.api_user, self.api_key = read_config()
+
+
+class BadInput(unittest.TestCase):
+
+    def test_login(self):
+        self.assertRaises(HTTPError, Pykkelabels, 'Bad user', 'Bad key')
+
+    def test_pdkdroppoints(self):
+        pl = Pykkelabels(self.api_user, self.api_key)
+        self.assertRaises(HTTPError, pl.pdk_droppoints, {'shouldbezipcode': '2300'})
+
+    def test_glsdroppoints(self):
+        pl = Pykkelabels(self.api_user, self.api_key)
+        self.assertRaises(HTTPError, pl.gls_droppoints, {'shouldbezipcode': '2300'})
+
+    def test_create_shipment(self):
+        params = {'shipping_agent': 'pdk',
+                  'weight': '1000',
+                  'receiver_name': 'John Doe',
+                  'receiver_address1': 'Some Street 42',
+                  'receiver_zipcode': '5230',
+                  'receiver_city': 'Odense M',
+                  'receiver_country': 'DK',
+                  'receiver_email': 'test@test.dk',
+                  'receiver_mobile': '12345678',
+                  'sender_name': 'John Wayne',
+                  'sender_address1': 'The Batcave 1',
+                  'sender_zipcode': '5000',
+                  'sender_city': 'Odense C',
+                  'sender_country': 'DK',
+                  'shipping_product_id': '51',
+                  'services': '11,123123',  # bad service number
+                  'test': 'true'}
+
+        pl = Pykkelabels(self.api_user, self.api_key)
+        self.assertRaises(HTTPError, pl.create_shipment, params)
+
+        params['services'] = '11,12'
+        params['shipping_agent'] = 'BAD'
+        self.assertRaises(HTTPError, pl.create_shipment, params)
+
+    def test_bad_api_url(self):
+        # Try with a bad domain name
+        self.assertRaises(URLError, Pykkelabels, self.api_user, self.api_key,
+                          'https://app.pakkelabelsBADBAD.dk/api/public/v2')
+
+        # Try with a bad url, but correct domain
+        self.assertRaises(URLError, Pykkelabels, self.api_user, self.api_key,
+                          'https://app.pakkelabels.dk/api/public/v2BADBAD')
+
+    def setUp(self):
+        self.api_user, self.api_key = read_config()
 
 
 if __name__ == '__main__':
