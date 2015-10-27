@@ -36,10 +36,11 @@ from .exceptions import *
 class Pykkelabels:
     API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2'
 
-    def __init__(self, api_user, api_key):
+    def __init__(self, api_user, api_key, api_endpoint=API_ENDPOINT):
         self._api_user = api_user
         self._api_key = api_key
         self._token = None
+        self.api_endpoint = api_endpoint
         self.login()
 
     def login(self):
@@ -108,15 +109,23 @@ class Pykkelabels:
 
         try:
             if doPost:
-                url = Pykkelabels.API_ENDPOINT + '/' + method
+                url = self.api_endpoint + '/' + method
                 f = urllib.request.urlopen(url, params.encode('utf-8'))
             else:
-                url = Pykkelabels.API_ENDPOINT + '/' + method + '?' + params
+                url = self.api_endpoint + '/' + method + '?' + params
                 f = urllib.request.urlopen(url)
         except urllib.error.HTTPError as e:
             error_message = e.read().decode('utf-8')
-            error_parsed = json.loads(error_message)
-            raise HTTPError(str(e) + '; ' + error_parsed['message']['base'][0]) from None
+            try:
+                error_parsed = json.loads(error_message)
+            except:
+                raise URLError('Parsed error message is not parseable, possible bad url')
+            if isinstance(error_parsed['message'], dict):
+                error_message = error_parsed['message']['base'][0]
+            else:
+                error_message = error_parsed['message']
+            message = str(e) + '; ' + error_message
+            raise HTTPError(message) from None
             return None
         except urllib.error.URLError as e:
             raise URLError('URL error: {}'.format(e.reason)) from None
