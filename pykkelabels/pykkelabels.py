@@ -33,6 +33,7 @@ from decimal import *
 
 from .exceptions import *
 
+
 class Pykkelabels:
     API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2'
 
