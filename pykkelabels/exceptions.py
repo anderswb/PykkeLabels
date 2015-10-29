@@ -1,8 +1,8 @@
-class HTTPError(Exception):
+class PageError(Exception):
     def __init__(self, message):
-        super(HTTPError, self).__init__(message)
+        super(PageError, self).__init__(message)
 
 
-class URLError(Exception):
+class ConnError(Exception):
     def __init__(self, message):
-        super(URLError, self).__init__(message)
+        super(ConnError, self).__init__(message)

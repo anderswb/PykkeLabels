@@ -25,9 +25,15 @@ base64 = label.pdf(31629)
 pdf = base64.decode('base64')
 """
 
-import urllib.request
-import urllib.error
-import urllib.parse
+try:
+    from urllib.parse import urlparse, urlencode
+    from urllib.request import urlopen, Request
+    from urllib.error import HTTPError, URLError
+except ImportError:
+    from urlparse import urlparse
+    from urllib import urlencode
+    from urllib2 import urlopen, Request, HTTPError, URLError
+
 import json
 from decimal import *
 
@@ -106,31 +112,33 @@ class Pykkelabels:
             raise TypeError('params should be of type dict or None, got type: {}'.format(type(params).__name__))
 
         params['token'] = self._token
-        params = urllib.parse.urlencode(params)
+        params = urlencode(params)
 
         try:
             if doPost:
                 url = self.api_endpoint + '/' + method
-                f = urllib.request.urlopen(url, params.encode('utf-8'))
+                f = urlopen(url, params.encode('utf-8'))
             else:
                 url = self.api_endpoint + '/' + method + '?' + params
-                f = urllib.request.urlopen(url)
-        except urllib.error.HTTPError as e:
+                f = urlopen(url)
+        except HTTPError as e:
             error_message = e.read().decode('utf-8')
             try:
                 error_parsed = json.loads(error_message)
             except:
-                raise URLError('Parsed error message is not parsable, possible bad url')
+                raise ConnError('Parsed error message is not parsable, possible bad url')
             if isinstance(error_parsed['message'], dict):
                 error_message = error_parsed['message']['base'][0]
             else:
                 error_message = error_parsed['message']
             message = str(e) + '; ' + error_message
-            raise HTTPError(message) from None
-            return None
-        except urllib.error.URLError as e:
-            raise URLError('URL error: {}'.format(e.reason)) from None
-            return None
+            exc = PageError(message)
+            exc.__cause__ = None
+            raise exc
+        except URLError as e:
+            exc = ConnError('URL error: {}'.format(e.reason))
+            exc.__cause__ = None
+            raise exc
 
         output = f.read().decode('utf-8')
         outputparsed = json.loads(output)

@@ -4,10 +4,14 @@ import unittest
 from pykkelabels import Pykkelabels
 from pykkelabels.exceptions import *
 
-import urllib.error
 from decimal import *
 import base64
-import configparser
+
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+
 from os import path
 
 
@@ -44,23 +48,23 @@ class GoodInput(unittest.TestCase):
 
     def test_pdkdroppoints(self):
         pl = Pykkelabels(self.api_user, self.api_key)
-        exp_points = [{'zipcode': '2300', 'city': 'KØBENHAVN S', 'address': 'Brydes Allé 34', 'number': '3830',
-                       'company_name': 'Pakkeboks 3830 Dagli Brugsen'},
-                      {'zipcode': '2300', 'city': 'KØBENHAVN S', 'address': 'Englandsvej 28', 'number': '626',
-                       'company_name': 'Pakkeboks 626 Kvickly'},
-                      {'zipcode': '2300', 'city': 'KØBENHAVN S', 'address': 'Englandsvej 28', 'number': '626',
-                       'company_name': 'Pakkeboks 626 Kvickly Handikapvenlig'}]
+        exp_points = [{u'zipcode': u'2300', u'city': u'KØBENHAVN S', u'address': u'Brydes Allé 34', u'number': u'3830',
+                       u'company_name': u'Pakkeboks 3830 Dagli Brugsen'},
+                      {u'zipcode': u'2300', u'city': u'KØBENHAVN S', u'address': u'Englandsvej 28', u'number': u'626',
+                       u'company_name': u'Pakkeboks 626 Kvickly'},
+                      {u'zipcode': u'2300', u'city': u'KØBENHAVN S', u'address': u'Englandsvej 28', u'number': u'626',
+                       u'company_name': u'Pakkeboks 626 Kvickly Handikapvenlig'}]
         points = pl.pdk_droppoints({'zipcode': '2300'})
         self.assertEqual(points, exp_points)
 
     def test_glsdroppoints(self):
         pl = Pykkelabels(self.api_user, self.api_key)
-        exp_points = [{'number': '95913', 'city': 'København S', 'company_name': 'Dagli´Brugsen Brydes Allé',
-                       'address2': 'Pakkeshop: 95913', 'address': 'Brydes\xa0Allé 34', 'zipcode': '2300'},
-                      {'number': '95422', 'city': 'København S', 'company_name': 'PC Update',
-                       'address2': 'Pakkeshop: 95422', 'address': 'Amagerbrogade 109', 'zipcode': '2300'},
-                      {'number': '95423', 'city': 'København S', 'company_name': 'Centerkiosken',
-                       'address2': 'Pakkeshop: 95423', 'address': 'Reberbanegade 3', 'zipcode': '2300'}]
+        exp_points = [{u'number': u'95913', u'city': u'København S', u'company_name': u'Dagli´Brugsen Brydes Allé',
+                       u'address2': u'Pakkeshop: 95913', u'address': u'Brydes\xa0Allé 34', u'zipcode': u'2300'},
+                      {u'number': u'95422', u'city': u'København S', u'company_name': u'PC Update',
+                       u'address2': u'Pakkeshop: 95422', u'address': u'Amagerbrogade 109', u'zipcode': u'2300'},
+                      {u'number': u'95423', u'city': u'København S', u'company_name': u'Centerkiosken',
+                       u'address2': u'Pakkeshop: 95423', u'address': u'Reberbanegade 3', u'zipcode': u'2300'}]
         points = pl.gls_droppoints({'zipcode': '2300'})
         self.assertEqual(points, exp_points)
 
@@ -121,7 +125,7 @@ class GoodInput(unittest.TestCase):
             raise Exception('Unable to locate the reference label file')
 
         with open(ref_filename, 'rb') as f:
-            pdf_reference = f.read()            
+            pdf_reference = f.read()
 
         self.assertEqual(pdf_payload, pdf_reference)
 
@@ -132,15 +136,15 @@ class GoodInput(unittest.TestCase):
 class BadInput(unittest.TestCase):
 
     def test_login(self):
-        self.assertRaises(HTTPError, Pykkelabels, 'Bad user', 'Bad key')
+        self.assertRaises(PageError, Pykkelabels, 'Bad user', 'Bad key')
 
     def test_pdkdroppoints(self):
         pl = Pykkelabels(self.api_user, self.api_key)
-        self.assertRaises(HTTPError, pl.pdk_droppoints, {'shouldbezipcode': '2300'})
+        self.assertRaises(PageError, pl.pdk_droppoints, {'shouldbezipcode': '2300'})
 
     def test_glsdroppoints(self):
         pl = Pykkelabels(self.api_user, self.api_key)
-        self.assertRaises(HTTPError, pl.gls_droppoints, {'shouldbezipcode': '2300'})
+        self.assertRaises(PageError, pl.gls_droppoints, {'shouldbezipcode': '2300'})
 
     def test_create_shipment(self):
         params = {'shipping_agent': 'pdk',
@@ -162,19 +166,19 @@ class BadInput(unittest.TestCase):
                   'test': 'true'}
 
         pl = Pykkelabels(self.api_user, self.api_key)
-        self.assertRaises(HTTPError, pl.create_shipment, params)
+        self.assertRaises(PageError, pl.create_shipment, params)
 
         params['services'] = '11,12'
         params['shipping_agent'] = 'BAD'
-        self.assertRaises(HTTPError, pl.create_shipment, params)
+        self.assertRaises(PageError, pl.create_shipment, params)
 
     def test_bad_api_url(self):
         # Try with a bad domain name
-        self.assertRaises(URLError, Pykkelabels, self.api_user, self.api_key,
+        self.assertRaises(ConnError, Pykkelabels, self.api_user, self.api_key,
                           'https://app.pakkelabelsBADBAD.dk/api/public/v2')
 
         # Try with a bad url, but correct domain
-        self.assertRaises(URLError, Pykkelabels, self.api_user, self.api_key,
+        self.assertRaises(ConnError, Pykkelabels, self.api_user, self.api_key,
                           'https://app.pakkelabels.dk/api/public/v2BADBAD')
 
     def setUp(self):
