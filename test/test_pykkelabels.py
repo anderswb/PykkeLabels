@@ -113,8 +113,15 @@ class GoodInput(unittest.TestCase):
         pdf_payload[969:969+32] = b"00000000000000000000000000000000"  # blank out the date-stamp
 
         # get the reference label
-        with open('reference_label.pdf', 'rb') as f:
-            pdf_reference = f.read()
+        if path.isfile('reference_label.pdf'):
+            ref_filename = 'reference_label.pdf'
+        elif path.isfile(path.join('test', 'reference_label.pdf')):
+            ref_filename = path.join('test', 'reference_label.pdf')
+        else:
+            raise Exception('Unable to locate the reference label file')
+
+        with open(ref_filename, 'rb') as f:
+            pdf_reference = f.read()            
 
         self.assertEqual(pdf_payload, pdf_reference)
 
