@@ -25,7 +25,7 @@ from pykkelabels import Pykkelabels, ConnError, PageError
 
 The first thing required is to login:
 ```
-label = new Pykkelabels('api_user', 'api_key')
+label = Pykkelabels('api_user', 'api_key')
 ```
 
 This will login and fetch the required token.

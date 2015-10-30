@@ -127,10 +127,13 @@ class Pykkelabels:
                 error_parsed = json.loads(error_message)
             except:
                 raise ConnError('Parsed error message is not parsable, possible bad url')
-            if isinstance(error_parsed['message'], dict):
-                error_message = error_parsed['message']['base'][0]
+            if 'message' in error_parsed:
+                if isinstance(error_parsed['message'], dict):
+                    error_message = error_parsed['message']['base'][0]
+                else:
+                    error_message = error_parsed['message']
             else:
-                error_message = error_parsed['message']
+                error_message = ''
             message = str(e) + '; ' + error_message
             exc = PageError(message)
             exc.__cause__ = None
