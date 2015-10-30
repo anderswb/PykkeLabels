@@ -65,14 +65,16 @@ See the github guide to contributing [here](https://guides.github.com/activities
 - v0.1.1: Added unittests to the methods where it is possible
 - v0.1.2: Prepared pypi release
 - v0.1.3: Added better error handling, and added custom exception. Added testing for bad inputs. Implemented better test of pdf generation.  
-- v0.1.4: Removed inwanted files from pypi release
+- v0.1.4: Removed unwanted files from pypi release
 - v1.0.0: Made the package compatible with Python 2 and 3. Renamed exception.
 - v1.1.0: Better error handling
 
 ## Credits
 
 Python package by Anders Winther Brandt
+
 Original PHP module by Pakkelabels.dk
+
 Tweaks from Jan Christensen from Pakkelabels.dk
 
 ## License
