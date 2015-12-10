@@ -8,11 +8,11 @@ def read(fname):
 
 setup(
     name = "Pykkelabels",
-    version = pykkelabels.__version__,
-    author = pykkelabels.__maintainer__,
-    author_email = pykkelabels.__email__,
+    version = pykkelabels.version.__version__,
+    author = pykkelabels.version.__maintainer__,
+    author_email = pykkelabels.version.__email__,
     description = ("Provides access to the pakkelabels.dk web service."),
-    license = pykkelabels.__license__,
+    license = pykkelabels.version.__license__,
     keywords = "pakke labels pakkelabels pakkelabels.dk",
     url = "https://github.com/anderswb/PykkeLabels",
     packages=['pykkelabels', 'test'],
