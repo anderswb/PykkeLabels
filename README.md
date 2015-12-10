@@ -68,6 +68,7 @@ See the github guide to contributing [here](https://guides.github.com/activities
 - v0.1.4: Removed unwanted files from pypi release
 - v1.0.0: Made the package compatible with Python 2 and 3. Renamed exception.
 - v1.1.0: Better error handling
+- v1.1.1: Sets user_agent
 
 ## Credits
 
