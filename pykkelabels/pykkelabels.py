@@ -19,11 +19,10 @@ import json
 from decimal import *
 
 from .exceptions import *
-
+from .version import __version__
 
 class Pykkelabels:
     API_ENDPOINT = 'https://app.pakkelabels.dk/api/public/v2'
-    VERSION = "1.1.1"
 
     def __init__(self, api_user, api_key, api_endpoint=API_ENDPOINT):
         self._api_user = api_user
@@ -94,7 +93,7 @@ class Pykkelabels:
             raise TypeError('params should be of type dict or None, got type: {}'.format(type(params).__name__))
 
         params['token'] = self._token
-        params['user_agent'] = 'Pykkelabels v' + self.VERSION
+        params['user_agent'] = 'Pykkelabels v' + __version__
         params = urlencode(params)
 
         try:

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from pykkelabels import Pykkelabels
-from pykkelabels.exceptions import *
+from pykkelabels import *
+#from pykkelabels import Pykkelabels
+#from pykkelabels.exceptions import *
 
 from decimal import *
 import base64
